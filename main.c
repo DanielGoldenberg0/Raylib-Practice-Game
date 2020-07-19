@@ -1,8 +1,14 @@
 #include "raylib.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #define WIDTH 800
 #define HEIGHT 450
 #define FPS 60
+
+const int numEnemies = 5;
 
 struct Player {
     Vector2 position;
@@ -18,11 +24,18 @@ struct Enemy {
     float speed;
 } enemy;
 
+float randNum()
+{
+    return (rand() % 100) / 100.0;
+}
+
 void setup()
 {
     InitWindow(WIDTH, HEIGHT, "Raylib Game");
 
     SetTargetFPS(FPS);
+
+    srand(time(NULL));
 }
 
 int main()
@@ -33,6 +46,16 @@ int main()
     player.color = (Color) {20, 76, 155, 255};
     player.radius = 30;
     player.speed = 6;
+
+    struct Enemy enemyList[numEnemies];
+
+    for (int i = 0; i < numEnemies; i++)
+    {
+        enemyList[i].position = (Vector2) {randNum() * 100, randNum() * 100};
+        enemyList[i].color = (Color) {randNum() * 2};
+        enemyList[i].radius = randNum() * 100;
+        enemyList[i].radius = randNum() * 100;
+    }
 
     while (!WindowShouldClose())
     {
