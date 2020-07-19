@@ -4,7 +4,19 @@
 #define HEIGHT 450
 #define FPS 60
 
-const float speed = 4;
+struct Player {
+    Vector2 position;
+    Color color;
+    float radius;
+    float speed;
+} player;
+
+struct Enemy {
+    Vector2 position;
+    Color color;
+    float radius;
+    float speed;
+} enemy;
 
 void setup()
 {
@@ -17,29 +29,32 @@ int main()
 {
     setup();
 
-    Vector2 circlePos = {(float) WIDTH/2, (float) HEIGHT/2};
+    player.position = (Vector2) {(float) WIDTH/2, (float) HEIGHT/2};
+    player.color = (Color) {20, 76, 155, 255};
+    player.radius = 30;
+    player.speed = 6;
 
     while (!WindowShouldClose())
     {
-        // Update
-        if (IsKeyDown(KEY_RIGHT))
+        // Movement
+        if (IsKeyDown(KEY_RIGHT) && player.position.x < WIDTH - player.radius)
         {
-            circlePos.x += speed;
+            player.position.x += player.speed;
         }
 
-        if (IsKeyDown(KEY_LEFT))
+        if (IsKeyDown(KEY_LEFT) && player.position.x > 0 + player.radius)
         {
-            circlePos.x -= speed;
+            player.position.x -= player.speed;
         }
 
-        if (IsKeyDown(KEY_UP))
+        if (IsKeyDown(KEY_UP) && player.position.y > 0 + player.radius)
         {
-            circlePos.y -= speed;
+            player.position.y -= player.speed;
         }
 
-        if (IsKeyDown(KEY_DOWN))
+        if (IsKeyDown(KEY_DOWN) && player.position.y < HEIGHT - player.radius)
         {
-            circlePos.y += speed;
+            player.position.y += player.speed;
         }
 
         // Draw
@@ -47,7 +62,7 @@ int main()
 
         ClearBackground(BLACK);
 
-        DrawCircleV(circlePos, 50, ORANGE);
+        DrawCircleV(player.position, player.radius, player.color);
 
         EndDrawing();
     }
