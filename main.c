@@ -1,32 +1,31 @@
 #include "raylib.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #define WIDTH 800
 #define HEIGHT 450
 #define FPS 60
 
 const int numEnemies = 5;
 
-struct Player {
+ struct Player {
     Vector2 position;
     Color color;
     float radius;
     float speed;
-} player;
+};
 
 struct Enemy {
     Vector2 position;
     Color color;
     float radius;
     float speed;
-} enemy;
+};
 
-float randNum()
+Vector2 RandomPositionOnScreen(int offset)
 {
-    return (rand() % 100) / 100.0;
+    int xPos = GetRandomValue(0 + offset, WIDTH - offset);
+    int yPos = GetRandomValue(0 + offset, HEIGHT - offset);
+
+    return (Vector2) {xPos, yPos};
 }
 
 void setup()
@@ -34,14 +33,13 @@ void setup()
     InitWindow(WIDTH, HEIGHT, "Raylib Game");
 
     SetTargetFPS(FPS);
-
-    srand(time(NULL));
 }
 
 int main()
 {
     setup();
 
+    struct Player player;
     player.position = (Vector2) {(float) WIDTH/2, (float) HEIGHT/2};
     player.color = (Color) {20, 76, 155, 255};
     player.radius = 30;
@@ -51,10 +49,12 @@ int main()
 
     for (int i = 0; i < numEnemies; i++)
     {
-        enemyList[i].position = (Vector2) {randNum() * 100, randNum() * 100};
-        enemyList[i].color = (Color) {randNum() * 2};
-        enemyList[i].radius = randNum() * 100;
-        enemyList[i].radius = randNum() * 100;
+        struct Enemy *enemy = &enemyList[i];
+        (*enemy).color = (Color) {229, 78, 48, 255};
+        (*enemy).radius = GetRandomValue(20, 35);
+        (*enemy).speed = GetRandomValue(10, 30);
+
+        (*enemy).position = RandomPositionOnScreen((*enemy).radius);
     }
 
     while (!WindowShouldClose())
@@ -86,6 +86,11 @@ int main()
         ClearBackground(BLACK);
 
         DrawCircleV(player.position, player.radius, player.color);
+
+        for (int i = 0; i < numEnemies; i++)
+        {
+            DrawCircleV(enemyList[i].position, enemyList[i].radius, enemyList[i].color);
+        }
 
         EndDrawing();
     }
