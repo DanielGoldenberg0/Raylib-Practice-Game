@@ -4,9 +4,9 @@
 #define HEIGHT 450
 #define FPS 60
 
-const int numEnemies = 5;
+const int numEnemies = 10;
 
- struct Player {
+struct Player {
     Vector2 position;
     Color color;
     float radius;
@@ -15,12 +15,13 @@ const int numEnemies = 5;
 
 struct Enemy {
     Vector2 position;
+    Vector2 speed;
     Color color;
     float radius;
-    float speed;
+    float maxSpeed;
 };
 
-Vector2 RandomPositionOnScreen(int offset)
+Vector2 GetRandomScreenPosition(int offset)
 {
     int xPos = GetRandomValue(0 + offset, WIDTH - offset);
     int yPos = GetRandomValue(0 + offset, HEIGHT - offset);
@@ -40,44 +41,56 @@ int main()
     setup();
 
     struct Player player;
-    player.position = (Vector2) {(float) WIDTH/2, (float) HEIGHT/2};
     player.color = (Color) {20, 76, 155, 255};
     player.radius = 30;
     player.speed = 6;
+    player.position = (Vector2) {(float) WIDTH/2, (float) HEIGHT/2};
 
     struct Enemy enemyList[numEnemies];
 
     for (int i = 0; i < numEnemies; i++)
     {
-        struct Enemy *enemy = &enemyList[i];
-        (*enemy).color = (Color) {229, 78, 48, 255};
-        (*enemy).radius = GetRandomValue(20, 35);
-        (*enemy).speed = GetRandomValue(10, 30);
+        enemyList[i].color = (Color) {229, 78, 48, 255};
+        enemyList[i].radius = GetRandomValue(20, 35);
+        enemyList[i].maxSpeed = 3;
 
-        (*enemy).position = RandomPositionOnScreen((*enemy).radius);
+        enemyList[i].speed = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
+        while (enemyList[i].speed.x == 0 && enemyList[i].speed.y == 0)
+        {
+            enemyList[i].speed = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
+        }
+
+        enemyList[i].position = GetRandomScreenPosition(enemyList[i].radius);
     }
 
     while (!WindowShouldClose())
     {
-        // Movement
-        if (IsKeyDown(KEY_RIGHT) && player.position.x < WIDTH - player.radius)
+        // Player Movement
+        if ((IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) && player.position.x < WIDTH - player.radius)
         {
             player.position.x += player.speed;
         }
 
-        if (IsKeyDown(KEY_LEFT) && player.position.x > 0 + player.radius)
+        if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) && player.position.x > 0 + player.radius)
         {
             player.position.x -= player.speed;
         }
 
-        if (IsKeyDown(KEY_UP) && player.position.y > 0 + player.radius)
+        if ((IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) && player.position.y > 0 + player.radius)
         {
             player.position.y -= player.speed;
         }
 
-        if (IsKeyDown(KEY_DOWN) && player.position.y < HEIGHT - player.radius)
+        if ((IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) && player.position.y < HEIGHT - player.radius)
         {
             player.position.y += player.speed;
+        }
+
+        // Enemy Movement
+        for (int i = 0; i < numEnemies; i++)
+        {
+            enemyList[i].position.x += enemyList[i].speed.x;
+            enemyList[i].position.y -= enemyList[i].speed.y;
         }
 
         // Draw
@@ -85,12 +98,12 @@ int main()
 
         ClearBackground(BLACK);
 
-        DrawCircleV(player.position, player.radius, player.color);
-
         for (int i = 0; i < numEnemies; i++)
         {
             DrawCircleV(enemyList[i].position, enemyList[i].radius, enemyList[i].color);
         }
+
+        DrawCircleV(player.position, player.radius, player.color);
 
         EndDrawing();
     }
