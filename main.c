@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "colors.h"
 
 #define WIDTH 800
 #define HEIGHT 450
@@ -6,27 +7,27 @@
 
 const int numEnemies = 10;
 
-struct Player {
+typedef struct Player {
     Vector2 position;
     Color color;
     float radius;
     float speed;
-};
+} Player;
 
-struct Enemy {
+typedef struct Enemy {
     Vector2 position;
-    Vector2 speed;
+    Vector2 velocity;
     Color color;
     float radius;
     float maxSpeed;
-};
+} Enemy;
 
-Vector2 GetRandomScreenPosition(int offset)
+Vector2 GetRandomPosition(int offset)
 {
-    int xPos = GetRandomValue(0 + offset, WIDTH - offset);
-    int yPos = GetRandomValue(0 + offset, HEIGHT - offset);
+    int x = GetRandomValue(0 + offset, WIDTH - offset);
+    int y = GetRandomValue(0 + offset, HEIGHT - offset);
 
-    return (Vector2) {xPos, yPos};
+    return (Vector2) {x, y};
 }
 
 void setup()
@@ -40,27 +41,27 @@ int main()
 {
     setup();
 
-    struct Player player;
-    player.color = (Color) {20, 76, 155, 255};
+    Player player;
+    player.color = GAME_BLUE;
     player.radius = 30;
     player.speed = 6;
     player.position = (Vector2) {(float) WIDTH/2, (float) HEIGHT/2};
 
-    struct Enemy enemyList[numEnemies];
+    Enemy enemyList[numEnemies];
 
     for (int i = 0; i < numEnemies; i++)
     {
-        enemyList[i].color = (Color) {229, 78, 48, 255};
+        enemyList[i].color = GAME_RED;
         enemyList[i].radius = GetRandomValue(20, 35);
         enemyList[i].maxSpeed = 3;
 
-        enemyList[i].speed = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
-        while (enemyList[i].speed.x == 0 && enemyList[i].speed.y == 0)
+        enemyList[i].velocity = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
+        while (enemyList[i].velocity.x == 0 && enemyList[i].velocity.y == 0)
         {
-            enemyList[i].speed = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
+            enemyList[i].velocity = (Vector2) {GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed), GetRandomValue(-enemyList[i].maxSpeed, enemyList[i].maxSpeed)};
         }
 
-        enemyList[i].position = GetRandomScreenPosition(enemyList[i].radius);
+        enemyList[i].position = GetRandomPosition(enemyList[i].radius);
     }
 
     while (!WindowShouldClose())
@@ -71,12 +72,12 @@ int main()
             player.position.x += player.speed;
         }
 
-        if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) && player.position.x > 0 + player.radius)
+        if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) && player.position.x > player.radius)
         {
             player.position.x -= player.speed;
         }
 
-        if ((IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) && player.position.y > 0 + player.radius)
+        if ((IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) && player.position.y > player.radius)
         {
             player.position.y -= player.speed;
         }
@@ -89,14 +90,24 @@ int main()
         // Enemy Movement
         for (int i = 0; i < numEnemies; i++)
         {
-            enemyList[i].position.x += enemyList[i].speed.x;
-            enemyList[i].position.y -= enemyList[i].speed.y;
+            enemyList[i].position.x += enemyList[i].velocity.x;
+            enemyList[i].position.y -= enemyList[i].velocity.y;
+
+            if (enemyList[i].position.x < enemyList[i].radius || enemyList[i].position.x > WIDTH - enemyList[i].radius)
+            {
+                enemyList[i].velocity.x = -enemyList[i].velocity.x;
+            }
+
+            if (enemyList[i].position.y < enemyList[i].radius || enemyList[i].position.y > HEIGHT - enemyList[i].radius)
+            {
+                enemyList[i].velocity.y = -enemyList[i].velocity.y;
+            }
         }
 
         // Draw
         BeginDrawing();
 
-        ClearBackground(BLACK);
+        ClearBackground(GAME_BLACK);
 
         for (int i = 0; i < numEnemies; i++)
         {
