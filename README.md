@@ -1,2 +1,2 @@
 # Raylib-Practice-Game
-My first Raylib game!
+My first game made with the Raylib library!

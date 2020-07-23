@@ -1,10 +1,9 @@
-#ifndef EXAMPLE_COLORS_H
-#define EXAMPLE_COLORS_H
+#ifndef EXAMPLE_COLOR_H
+#define EXAMPLE_COLOR_H
 
-#define GAME_BLACK (Color) {13, 13, 13, 255}
-#define GAME_BLUE (Color) {36, 103, 181, 255}
+#define GAME_BLACK (Color) {19, 19, 19, 255}
+#define GAME_WHITE (Color) {236, 236, 236, 255}
 #define GAME_RED (Color) {229, 78, 48, 255}
-#define GAME_GREEN (Color) {119, 181, 45, 255}
 
 Color GetRandomColor()
 {
