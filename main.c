@@ -1,35 +1,20 @@
 #include "raylib.h"
+
 #include "utility/general.h"
 #include "utility/transform.h"
 #include "utility/color.h"
+#include "utility/time.h"
+#include "utility/draw.h"
+#include "game/entities.h"
 
 const int numEnemies = 8;
-
-typedef struct Player {
-    Vector2 position;
-    int radius;
-    int speed;
-} Player;
-
-typedef struct Enemy {
-    Vector2 position;
-    Vector2 velocity;
-    int radius;
-    int maxSpeed;
-} Enemy;
 
 Player player;
 Enemy enemyList[numEnemies];
 
-void setup()
-{
-    InitWindow(WIDTH, HEIGHT, "Raylib Game");
-
-    SetTargetFPS(FPS);
-}
-
 void start()
 {
+    player.color = GAME_WHITE;
     player.radius = 30;
     player.speed = 6;
     player.position = GetCenterPoint();
@@ -50,25 +35,30 @@ void start()
 
 void update()
 {
-    // Player Movement
-    if ((IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) && player.position.x < WIDTH - player.radius)
-    {
-        player.position.x += player.speed;
-    }
+    totalElapsedTime++;
 
-    if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) && player.position.x > player.radius)
+    if (player.enabled)
     {
-        player.position.x -= player.speed;
-    }
+        // Player Movement
+        if ((IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) && player.position.x < WIDTH - player.radius)
+        {
+            player.position.x += player.speed;
+        }
 
-    if ((IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) && player.position.y > player.radius)
-    {
-        player.position.y -= player.speed;
-    }
+        if ((IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) && player.position.x > player.radius)
+        {
+            player.position.x -= player.speed;
+        }
 
-    if ((IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) && player.position.y < HEIGHT - player.radius)
-    {
-        player.position.y += player.speed;
+        if ((IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) && player.position.y > player.radius)
+        {
+            player.position.y -= player.speed;
+        }
+
+        if ((IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) && player.position.y < HEIGHT - player.radius)
+        {
+            player.position.y += player.speed;
+        }
     }
 
     // Enemy logic
@@ -90,9 +80,9 @@ void update()
         }
 
         // Enemy-Player Collision
-        if (GetDistance(player.position, enemyList[i].position) < player.radius + enemyList[i].radius)
+        if (GetDistance(player.position, enemyList[i].position) < player.radius + enemyList[i].radius - 5 && GetTimeInSeconds() >= 2)
         {
-            enemyList[i].velocity = (Vector2) {-enemyList[i].velocity.x, -enemyList[i].velocity.y};
+            player.speed = 0;
         }
     }
 }
@@ -101,7 +91,7 @@ void draw()
 {
     ClearBackground(GAME_BLACK);
 
-    DrawCircleV(player.position, player.radius, GAME_WHITE);
+    DrawPlayer(&player, 1);
 
     for (int i = 0; i < numEnemies; i++)
     {
@@ -111,7 +101,9 @@ void draw()
 
 int main()
 {
-    setup();
+    InitWindow(WIDTH, HEIGHT, "Raylib Game");
+    SetTargetFPS(FPS);
+
     start();
 
     while (!WindowShouldClose())
