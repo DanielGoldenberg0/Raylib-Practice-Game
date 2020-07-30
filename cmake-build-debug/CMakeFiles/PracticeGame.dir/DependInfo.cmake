@@ -4,12 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/Users/dg/Dev/CLion/PracticeGame/game.c" "/Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles/PracticeGame.dir/game.c.o"
   "/Users/dg/Dev/CLion/PracticeGame/main.c" "/Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles/PracticeGame.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
+  "/usr/local/include"
   )
 
 # Targets to which this target links.

@@ -111,17 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named example
+# Target rules for targets named PracticeGame
 
 # Build rule for target.
-example: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 example
-.PHONY : example
+PracticeGame: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 PracticeGame
+.PHONY : PracticeGame
 
 # fast build rule for target.
-example/fast:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/build
-.PHONY : example/fast
+PracticeGame/fast:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/build
+.PHONY : PracticeGame/fast
+
+game.o: game.c.o
+
+.PHONY : game.o
+
+# target to build an object file
+game.c.o:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/game.c.o
+.PHONY : game.c.o
+
+game.i: game.c.i
+
+.PHONY : game.i
+
+# target to preprocess a source file
+game.c.i:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/game.c.i
+.PHONY : game.c.i
+
+game.s: game.c.s
+
+.PHONY : game.s
+
+# target to generate assembly for a file
+game.c.s:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/game.c.s
+.PHONY : game.c.s
 
 main.o: main.c.o
 
@@ -129,7 +156,7 @@ main.o: main.c.o
 
 # target to build an object file
 main.c.o:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/main.c.o
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/main.c.o
 .PHONY : main.c.o
 
 main.i: main.c.i
@@ -138,7 +165,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/main.c.i
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -147,7 +174,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/main.c.s
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -158,7 +185,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... example"
+	@echo "... PracticeGame"
+	@echo "... game.o"
+	@echo "... game.i"
+	@echo "... game.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

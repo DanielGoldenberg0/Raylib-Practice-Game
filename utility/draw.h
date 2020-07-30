@@ -2,7 +2,9 @@
 #define EXAMPLE_DRAW_H
 
 #include "raylib.h"
-#include "../game/entities.h"
+
+#include "time.h"
+#include "../game/player.h"
 
 bool fired;
 int timeLastElapsed;

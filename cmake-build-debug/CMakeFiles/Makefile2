@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /Users/dg/Dev/CLion/PracticeGame/cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/example.dir/all
+all: CMakeFiles/PracticeGame.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/example.dir/clean
+clean: CMakeFiles/PracticeGame.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/example.dir
+# Target rules for target CMakeFiles/PracticeGame.dir
 
 # All Build rule for target.
-CMakeFiles/example.dir/all:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/depend
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target example"
-.PHONY : CMakeFiles/example.dir/all
+CMakeFiles/PracticeGame.dir/all:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/depend
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles --progress-num=1,2,3 "Built target PracticeGame"
+.PHONY : CMakeFiles/PracticeGame.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/example.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/example.dir/all
+CMakeFiles/PracticeGame.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/PracticeGame.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dg/Dev/CLion/PracticeGame/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/example.dir/rule
+.PHONY : CMakeFiles/PracticeGame.dir/rule
 
 # Convenience name for target.
-example: CMakeFiles/example.dir/rule
+PracticeGame: CMakeFiles/PracticeGame.dir/rule
 
-.PHONY : example
+.PHONY : PracticeGame
 
 # clean rule for target.
-CMakeFiles/example.dir/clean:
-	$(MAKE) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/clean
-.PHONY : CMakeFiles/example.dir/clean
+CMakeFiles/PracticeGame.dir/clean:
+	$(MAKE) -f CMakeFiles/PracticeGame.dir/build.make CMakeFiles/PracticeGame.dir/clean
+.PHONY : CMakeFiles/PracticeGame.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

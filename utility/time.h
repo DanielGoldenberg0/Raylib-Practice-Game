@@ -1,7 +1,7 @@
 #ifndef EXAMPLE_TIME_H
 #define EXAMPLE_TIME_H
 
-#include "general.h"
+#include "init.h"
 
 int totalElapsedTime = 0;
 

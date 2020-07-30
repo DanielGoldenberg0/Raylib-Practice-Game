@@ -2,7 +2,7 @@
 #define EXAMPLE_TRANSFORM_H
 
 #include <math.h>
-#include "general.h"
+#include "init.h"
 
 Vector2 GetCenterPoint()
 {
