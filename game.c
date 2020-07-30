@@ -23,24 +23,39 @@ void start()
     {
         EnemyStart(&enemyList[i]);
     }
-}
 
+}
 void update()
 {
-    totalElapsedTime++;
-
-    PlayerUpdate(&player);
-
-    // Enemy logic
-    for (int i = 0; i < enemyCount; i++)
+    if (!gameOver)
     {
-        EnemyUpdate(&enemyList[i]);
+        totalElapsedTime++;
 
-        // Enemy-Player Collision
-        if (PlayerToEnemyCollision(player, enemyList[i]) && GetTimeInSeconds() >= 1.5f)
+        PlayerUpdate(&player);
+
+        // Enemy logic
+        for (int i = 0; i < enemyCount; i++)
         {
-            gameOver = true;
+            EnemyUpdate(&enemyList[i]);
+
+            // Enemy-Player Collision
+            if (PlayerToEnemyCollision(player, enemyList[i]) && GetTimeInSeconds() >= 1.5f)
+            {
+                gameOver = true;
+            }
         }
+    }
+    else
+    {
+        for (int i = 0; i < enemyCount; i++)
+        {
+            EnemyStart(&enemyList[i]);
+        }
+    }
+
+    if (IsKeyDown(KEY_SPACE))
+    {
+        gameOver = false;
     }
 }
 
@@ -60,5 +75,6 @@ void draw()
     else
     {
         DrawText("Game Over", GetCenterPoint().x - 90, GetCenterPoint().y - 40, 40, COLOR_WHITE);
+        DrawText("Press [SPACE] to try again", GetCenterPoint().x - 130, GetCenterPoint().y + 20, 20, COLOR_WHITE);
     }
 }

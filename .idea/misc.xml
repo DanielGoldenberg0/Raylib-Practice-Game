@@ -5,7 +5,7 @@
     <option name="languageLevel" value="ES6" />
   </component>
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/game/enemy.h" />
-    <file url="file://$PROJECT_DIR$/game/player.h" />
+    <file url="file://$PROJECT_DIR$/game/enemys.h" />
+    <file url="file://$PROJECT_DIR$/game/player2.h" />
   </component>
 </project>
