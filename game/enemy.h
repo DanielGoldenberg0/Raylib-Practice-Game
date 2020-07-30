@@ -13,9 +13,9 @@ typedef struct Enemy
 
 void EnemyStart(Enemy *enemy)
 {
-    enemy->position = GetRandomPosition(10);
     enemy->radius = GetRandomValue(20, 40);
     enemy->maxSpeed = GetRandomValue(2, 4);
+    enemy->position = GetRandomPosition(enemy->radius);
 
     while (enemy->velocity.x == 0 && enemy->velocity.y == 0)
     {
